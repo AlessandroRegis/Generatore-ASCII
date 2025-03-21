@@ -22,8 +22,10 @@ def download_ascii():
     if text_input.get():
         user_input = text_input.get()
         try:
-            # Generazione dell'arte ASCII usando il modulo art
-            ascii_art = text2art(user_input)  # Converte il testo in arte ASCII
+            words = user_input.split()  # Divide la frase in parole
+            # Uso del font 'standard' per uniformità
+            ascii_art_list = [text2art(word, font='standard') for word in words]
+            ascii_art = "\n".join(ascii_art_list)  # Combina ogni parola con una nuova riga
         except Exception as e:
             ascii_art = f"Errore nella generazione dell'arte ASCII: {e}"
     else:
@@ -33,7 +35,7 @@ def download_ascii():
     textwidget = tk.Text(height=20)  # Aggiunto un'altezza per gestire output più grandi
     textwidget.insert(tk.END, ascii_art)
     textwidget.grid(row=3, column=0, sticky="WE", padx=10, pady=10)
-    textwidget.configure(state='disabled')  # Per rendere il testo di sola lettura
+    textwidget.configure(state='disabled', font=("Courier", 10))  # Uso di carattere monospaziato
 
     # Etichetta per i crediti
     credits_label = tk.Label(window, text="Un ringraziamento a PyMike, creatore del tutorial che ha permesso di creare questo programma.")
